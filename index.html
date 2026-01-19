@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ennovatio54 | Strategic Alignment</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;800&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* --- DESIGN SYSTEM --- */
+      :root {
+        --bg-base: #e2e8f0;
+        --bg-card: #f8fafc;
+        --text-primary: #0f172a;
+        --text-secondary: #334155;
+        --text-muted: #64748b;
+        --accent-teal: #0d9488;
+        --accent-indigo: #4f46e5;
+        --accent-amber: #d97706;
+        --accent-slate: #1e293b;
+        --shadow-soft: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+        --border-subtle: 1px solid rgba(0, 0, 0, 0.08);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Manrope", sans-serif;
+        background-color: var(--bg-base);
+        color: var(--text-primary);
+        height: 100vh;
+        width: 100vw;
+        overflow: hidden;
+        background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+        background-size: 40px 40px;
+      }
+
+      /* --- LAYOUT --- */
+      .deck-wrapper {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .slide {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        padding: 3rem 6rem;
+        opacity: 0;
+        visibility: hidden;
+        transform: scale(0.98) translateY(20px);
+        transition: all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .slide.active {
+        opacity: 1;
+        visibility: visible;
+        transform: scale(1) translateY(0);
+      }
+
+      /* --- TYPOGRAPHY --- */
+      h1 {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 5.5rem;
+        line-height: 1.1;
+        font-weight: 700;
+        letter-spacing: -3px;
+        margin-bottom: 2rem;
+        color: var(--accent-slate);
+      }
+
+      h2 {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        letter-spacing: -1.5px;
+        color: var(--text-primary);
+      }
+
+      .eyebrow {
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        font-size: 1.1rem;
+        font-weight: 800;
+        color: var(--accent-indigo);
+        margin-bottom: 1.5rem;
+        display: block;
+      }
+
+      p {
+        font-size: 1.5rem;
+        line-height: 1.6;
+        color: var(--text-secondary);
+        max-width: 1100px;
+        margin-bottom: 2rem;
+      }
+
+      /* --- COMPONENTS --- */
+      .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        height: 100%;
+        align-items: center;
+      }
+      .grid-3 {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+
+      /* Updated Card Design for Heavier Content */
+      .card {
+        background: var(--bg-card);
+        border: var(--border-subtle);
+        border-radius: 20px;
+        padding: 2.5rem;
+        box-shadow: var(--shadow-soft);
+        height: 100%;
+        transition: 0.3s;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .card-icon {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        display: block;
+      }
+      .card-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: var(--text-primary);
+      }
+      .card-text {
+        font-size: 1.15rem;
+        color: var(--text-secondary);
+        line-height: 1.5;
+        flex-grow: 1;
+      }
+      .card-footer {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        margin-top: 1.5rem;
+        border-top: 1px solid #e2e8f0;
+        padding-top: 1rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .highlight-box {
+        background: rgba(13, 148, 136, 0.1);
+        border-left: 6px solid var(--accent-teal);
+        padding: 2rem;
+        border-radius: 0 12px 12px 0;
+        margin-top: 2rem;
+      }
+
+      /* --- TEAM GRID --- */
+      .team-container {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2rem;
+        width: 100%;
+        margin-top: 3rem;
+      }
+      .team-container-bottom {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+        width: 75%;
+        margin: 2rem auto 0 auto;
+      }
+      .team-card {
+        background: var(--bg-card);
+        padding: 2rem 1.5rem;
+        border-radius: 16px;
+        text-align: center;
+        box-shadow: var(--shadow-soft);
+        border: var(--border-subtle);
+      }
+      .team-img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 1rem;
+        background: #cbd5e1;
+        border: 3px solid var(--accent-indigo);
+      }
+      .team-name {
+        font-weight: 800;
+        font-size: 1.3rem;
+        color: var(--text-primary);
+      }
+      .team-role {
+        font-size: 0.95rem;
+        color: var(--accent-indigo);
+        font-weight: 700;
+        text-transform: uppercase;
+        margin-top: 0.5rem;
+      }
+
+      /* --- CONTROLS --- */
+      .progress-bar {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 8px;
+        background: var(--accent-indigo);
+        width: 0%;
+        transition: width 0.5s ease;
+      }
+      .slide-number {
+        position: absolute;
+        bottom: 2rem;
+        right: 3rem;
+        font-family: "Space Grotesk";
+        font-weight: 700;
+        color: var(--text-muted);
+        font-size: 2rem;
+      }
+
+      /* --- ANIMATIONS --- */
+      .animate-up {
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeInUp 0.6s forwards 0.3s;
+      }
+      .delay-1 {
+        animation-delay: 0.4s;
+      }
+      .delay-2 {
+        animation-delay: 0.5s;
+      }
+      @keyframes fadeInUp {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="deck-wrapper">
+      <div class="slide active">
+        <span class="eyebrow">Strategic Alignment 2026</span>
+        <h1>Ennovatio54</h1>
+        <p style="font-size: 2rem; max-width: 1200px">
+          The Architecture of Africa’s Digital Health Future.
+        </p>
+        <div style="margin-top: 4rem">
+          <span
+            style="
+              padding: 12px 24px;
+              background: var(--accent-slate);
+              color: white;
+              border-radius: 50px;
+              font-size: 1.1rem;
+              font-weight: 600;
+            "
+            >Internal Strategy Deck</span
+          >
+        </div>
+      </div>
+
+      <div class="slide">
+        <span class="eyebrow">01 The Paradox</span>
+        <h2>World-class talent.<br />Broken operating system.</h2>
+        <p style="font-size: 1.3rem; margin-bottom: 2rem">
+          We are not just solving for paper files. We are solving for systemic
+          failure. These are some of the <strong>Structural Roots</strong> of
+          the crisis:
+        </p>
+
+        <div class="grid-3">
+          <div class="card animate-up">
+            <span class="card-icon">🏝️</span>
+            <h3 class="card-title">1. The Interoperability Gap</h3>
+            <p class="card-text">
+              <strong>The Silo Problem.</strong><br />Labs, pharmacies, and
+              hospitals operate as islands. Data does not move. The patient is
+              the only courier of their own history.
+            </p>
+            <div class="card-footer">Result: Fragmented Care</div>
+          </div>
+
+          <div class="card animate-up delay-1">
+            <span class="card-icon">💸</span>
+            <h3 class="card-title">2. The Operational Black Box</h3>
+            <p class="card-text">
+              <strong>The Economic Problem.</strong><br />Facilities run on
+              paper or Excel. They have zero visibility into inventory leakage,
+              true profit margins, or waste.
+            </p>
+            <div class="card-footer">Result: 40% Revenue Loss</div>
+          </div>
+
+          <div class="card animate-up delay-2">
+            <span class="card-icon">🌍</span>
+            <h3 class="card-title">3. The Sovereignty Crisis</h3>
+            <p class="card-text">
+              <strong>The Import Problem.</strong><br />We rely on expensive
+              Western software or weak local apps. We are renting our future
+              instead of owning our IP.
+            </p>
+            <div class="card-footer">Result: No AI / No Insights</div>
+          </div>
+        </div>
+
+        <div
+          style="
+            margin-top: 2rem;
+            border-top: 1px dashed var(--text-muted);
+            padding-top: 1rem;
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            opacity: 0.7;
+          "
+        >
+          <span
+            style="
+              font-weight: 700;
+              text-transform: uppercase;
+              font-size: 0.9rem;
+            "
+            >Beyond these roots, we see the branches:</span
+          >
+          <span style="font-size: 0.9rem"
+            >Supply Chain • Payments • Insurance • Diagnostics • Research</span
+          >
+        </div>
+      </div>
+
+      <div class="slide">
+        <span class="eyebrow">02 Our Identity</span>
+        <h2>Clearing the Confusion</h2>
+        <p>To build the right solution, we must define who we are.</p>
+        <div class="grid-3">
+          <div class="card animate-up">
+            <h3 class="card-title" style="color: var(--text-muted)">
+              We are NOT...
+            </h3>
+            <p class="card-text">A Digital Agency.</p>
+            <p
+              style="
+                font-size: 1.1rem;
+                color: var(--text-muted);
+                margin-top: 1rem;
+              "
+            >
+              We do not just make websites and leave.
+            </p>
+          </div>
+          <div class="card animate-up delay-1">
+            <h3 class="card-title" style="color: var(--text-muted)">
+              We are NOT...
+            </h3>
+            <p class="card-text">A Single Startup.</p>
+            <p
+              style="
+                font-size: 1.1rem;
+                color: var(--text-muted);
+                margin-top: 1rem;
+              "
+            >
+              We are not betting on just one app.
+            </p>
+          </div>
+          <div
+            class="card animate-up delay-2"
+            style="border: 3px solid var(--accent-indigo)"
+          >
+            <h3 class="card-title" style="color: var(--accent-indigo)">
+              WE ARE...
+            </h3>
+            <p class="card-text"><strong>A Venture Studio.</strong></p>
+            <p style="font-size: 1.1rem; margin-top: 1rem">
+              An institution that builds multiple, connected healthcare
+              companies under one roof.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide">
+        <span class="eyebrow">03 The Vision</span>
+        <h2>Institution Before Product</h2>
+        <div class="grid-2">
+          <div>
+            <p>Ennovatio54 is the <strong>Infrastructure Layer</strong>.</p>
+            <p>
+              Our vision is to become the most trusted innovation institution in
+              Africa.
+            </p>
+            <p>We are building the rails that digital health runs on.</p>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 1.5rem">
+            <div
+              class="card animate-up"
+              style="display: flex; align-items: center; gap: 1.5rem"
+            >
+              <span style="font-size: 3rem">🏗️</span>
+              <p style="margin: 0; font-weight: 700; font-size: 1.4rem">
+                We Build Infrastructure
+              </p>
+            </div>
+            <div
+              class="card animate-up delay-1"
+              style="display: flex; align-items: center; gap: 1.5rem"
+            >
+              <span style="font-size: 3rem">🚀</span>
+              <p style="margin: 0; font-weight: 700; font-size: 1.4rem">
+                We Launch Ventures
+              </p>
+            </div>
+            <div
+              class="card animate-up delay-2"
+              style="display: flex; align-items: center; gap: 1.5rem"
+            >
+              <span style="font-size: 3rem">🤝</span>
+              <p style="margin: 0; font-weight: 700; font-size: 1.4rem">
+                We Enable Partners
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide">
+        <span class="eyebrow">04 The Strategy</span>
+        <h2>The Dual Engine Model</h2>
+        <p>
+          How do we survive without millions in funding? We run two engines.
+        </p>
+        <div class="grid-2" style="margin-top: 3rem">
+          <div class="card" style="border-top: 8px solid var(--accent-teal)">
+            <h3 class="card-title" style="color: var(--accent-teal)">
+              Engine A: Enablement
+            </h3>
+            <p class="card-text">
+              <strong>The Service Layer.</strong><br /><br />We modernize
+              existing hospitals & labs immediately to generate revenue.
+            </p>
+          </div>
+          <div class="card" style="border-top: 8px solid var(--accent-amber)">
+            <h3 class="card-title" style="color: var(--accent-amber)">
+              Engine B: Innovation
+            </h3>
+            <p class="card-text">
+              <strong>The Venture Layer.</strong><br /><br />We build
+              proprietary software products based on the data we find.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide">
+        <span class="eyebrow">05 Engine A</span>
+        <h2>The Enablement Layer</h2>
+        <p>
+          This is our Trojan Horse. We don't just sell services; we embed
+          ourselves.
+        </p>
+        <div class="grid-3">
+          <div class="card">
+            <h3 class="card-title">Digital Presence</h3>
+            <p class="card-text">
+              Websites, Portals, and Professional Profiles for labs.
+            </p>
+          </div>
+          <div class="card">
+            <h3 class="card-title">Operational Audits</h3>
+            <p class="card-text">
+              Preparing facilities for workflow digitization.
+            </p>
+          </div>
+          <div class="card">
+            <h3 class="card-title">Strategic Visibility</h3>
+            <p class="card-text">Connecting them to partners and networks.</p>
+          </div>
+        </div>
+        <div class="highlight-box" style="text-align: center; margin-top: 3rem">
+          <p style="margin: 0; font-weight: 700; color: var(--accent-teal)">
+            Result: Revenue + Trust + Data Access.
+          </p>
+        </div>
+      </div>
+
+      <div class="slide">
+        <span class="eyebrow">06 Engine B</span>
+        <h2>The Innovation Layer</h2>
+        <p>
+          Using the access we gained, we spot the real problems and build
+          scalable products.
+        </p>
+        <div class="grid-3">
+          <div class="card">
+            <h3 class="card-title">Identify</h3>
+            <p class="card-text">We see 10 labs struggling with inventory.</p>
+          </div>
+          <div class="card">
+            <h3 class="card-title">Build</h3>
+            <p class="card-text">We build LabSync (SaaS) to solve it.</p>
+          </div>
+          <div class="card">
+            <h3 class="card-title">Scale</h3>
+            <p class="card-text">We sell it back to our network instantly.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide">
+        <span class="eyebrow">07 The Synergy</span>
+        <h2>The Flywheel Effect</h2>
+        <p>This is why we win. The two engines feed each other.</p>
+        <div
+          style="
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 3rem;
+            margin-top: 4rem;
+          "
+        >
+          <div style="text-align: center">
+            <div style="font-size: 4rem">🏥</div>
+            <h3 style="font-size: 1.5rem">Services</h3>
+            <p style="font-size: 1.1rem">Deploy Rails</p>
+          </div>
+          <div style="font-size: 3rem; color: var(--text-muted)">→</div>
+          <div style="text-align: center">
+            <div style="font-size: 4rem">📊</div>
+            <h3 style="font-size: 1.5rem">Insights</h3>
+            <p style="font-size: 1.1rem">Find Problems</p>
+          </div>
+          <div style="font-size: 3rem; color: var(--text-muted)">→</div>
+          <div style="text-align: center">
+            <div style="font-size: 4rem">💻</div>
+            <h3 style="font-size: 1.5rem">Product</h3>
+            <p style="font-size: 1.1rem">Build Solution</p>
+          </div>
+          <div style="font-size: 3rem; color: var(--text-muted)">→</div>
+          <div style="text-align: center">
+            <div style="font-size: 4rem">🌍</div>
+            <h3 style="font-size: 1.5rem">Scale</h3>
+            <p style="font-size: 1.1rem">Sell to Network</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide">
+        <span class="eyebrow">08 Operations</span>
+        <h2>How We Fit Together</h2>
+        <p>We don't work in silos. We work in 5 functional Pods.</p>
+
+        <div
+          style="
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+          "
+        >
+          <div
+            class="card"
+            style="padding: 1.5rem; border-top: 5px solid var(--accent-slate)"
+          >
+            <h3
+              style="
+                font-size: 1.2rem;
+                color: var(--accent-slate);
+                margin-bottom: 0.5rem;
+              "
+            >
+              1. Executive Pod
+            </h3>
+            <div
+              style="
+                font-size: 0.8rem;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                margin-bottom: 1rem;
+                opacity: 0.7;
+              "
+            >
+              Strategy & Safety
+            </div>
+            <ul style="list-style: none; font-size: 0.95rem; line-height: 1.6">
+              <li>• Founder & Strategy</li>
+              <li>• Head of Operations</li>
+              <li>• Clinical Governance</li>
+              <li>• Strategic Comms</li>
+            </ul>
+          </div>
+
+          <div
+            class="card"
+            style="padding: 1.5rem; border-top: 5px solid var(--accent-teal)"
+          >
+            <h3
+              style="
+                font-size: 1.2rem;
+                color: var(--accent-teal);
+                margin-bottom: 0.5rem;
+              "
+            >
+              2. Enablement Pod
+            </h3>
+            <div
+              style="
+                font-size: 0.8rem;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                margin-bottom: 1rem;
+                opacity: 0.7;
+              "
+            >
+              Revenue & Service
+            </div>
+            <ul style="list-style: none; font-size: 0.95rem; line-height: 1.6">
+              <li>• Head of Client Growth</li>
+              <li>• Brand & Design</li>
+            </ul>
+          </div>
+
+          <div
+            class="card"
+            style="padding: 1.5rem; border-top: 5px solid var(--accent-amber)"
+          >
+            <h3
+              style="
+                font-size: 1.2rem;
+                color: var(--accent-amber);
+                margin-bottom: 0.5rem;
+              "
+            >
+              3. Product Pod
+            </h3>
+            <div
+              style="
+                font-size: 0.8rem;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                margin-bottom: 1rem;
+                opacity: 0.7;
+              "
+            >
+              Venture Building
+            </div>
+            <ul style="list-style: none; font-size: 0.95rem; line-height: 1.6">
+              <li>• Head of Product</li>
+              <li>• Venture Success</li>
+            </ul>
+          </div>
+
+          <div
+            class="card"
+            style="padding: 1.5rem; border-top: 5px solid var(--accent-indigo)"
+          >
+            <h3
+              style="
+                font-size: 1.2rem;
+                color: var(--accent-indigo);
+                margin-bottom: 0.5rem;
+              "
+            >
+              4. Engineering Pod
+            </h3>
+            <div
+              style="
+                font-size: 0.8rem;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                margin-bottom: 1rem;
+                opacity: 0.7;
+              "
+            >
+              Core Tech Stack
+            </div>
+            <ul style="list-style: none; font-size: 0.95rem; line-height: 1.6">
+              <li>• Head of Engineering</li>
+              <li><em>(Supports All Pods)</em></li>
+            </ul>
+          </div>
+
+          <div
+            class="card"
+            style="padding: 1.5rem; border-top: 5px solid var(--accent-indigo)"
+          >
+            <h3
+              style="
+                font-size: 1.2rem;
+                color: var(--accent-indigo);
+                margin-bottom: 0.5rem;
+              "
+            >
+              5. Discovery Pod
+            </h3>
+            <div
+              style="
+                font-size: 0.8rem;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                margin-bottom: 1rem;
+                opacity: 0.7;
+              "
+            >
+              Research & Insight
+            </div>
+            <ul style="list-style: none; font-size: 0.95rem; line-height: 1.6">
+              <li>• Head of Research</li>
+              <li><em>(Feeds Product Pod)</em></li>
+            </ul>
+          </div>
+
+          <div
+            class="card"
+            style="
+              padding: 1.5rem;
+              background: #e2e8f0;
+              border: none;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            "
+          >
+            <p
+              style="
+                font-size: 1rem;
+                text-align: center;
+                margin: 0;
+                font-weight: 600;
+                color: var(--text-secondary);
+              "
+            >
+              "We have 10 Roles,<br />but One Mission."
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide">
+        <span class="eyebrow">09 Methodology</span>
+        <h2>The Venture Lifecycle</h2>
+        <p>Every product we build goes through four strict gates.</p>
+        <div
+          style="
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-top: 3rem;
+          "
+        >
+          <div class="card" style="background: #eff6ff">
+            <h3 style="font-size: 1.3rem; color: var(--accent-indigo)">
+              Phase 1
+            </h3>
+            <strong>Discovery</strong>
+            <p style="font-size: 1rem; margin-top: 0.5rem">
+              Is this a real problem?
+            </p>
+          </div>
+          <div class="card" style="background: #f0fdf4">
+            <h3 style="font-size: 1.3rem; color: var(--accent-teal)">
+              Phase 2
+            </h3>
+            <strong>Incubation</strong>
+            <p style="font-size: 1rem; margin-top: 0.5rem">
+              Build MVP. Test locally.
+            </p>
+          </div>
+          <div class="card" style="background: #fffbeb">
+            <h3 style="font-size: 1.3rem; color: var(--accent-amber)">
+              Phase 3
+            </h3>
+            <strong>Validation</strong>
+            <p style="font-size: 1rem; margin-top: 0.5rem">Get paying users.</p>
+          </div>
+          <div class="card" style="background: #f5f3ff">
+            <h3 style="font-size: 1.3rem; color: #7c3aed">Phase 4</h3>
+            <strong>Scale/Spin</strong>
+            <p style="font-size: 1rem; margin-top: 0.5rem">
+              Independent Company.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide">
+        <span class="eyebrow">10 Governance</span>
+        <h2>Safety & Standards</h2>
+        <p>We deal with lives. These are non-negotiable.</p>
+        <div class="grid-3">
+          <div class="card">
+            <h3>Clinical Integrity</h3>
+            <p class="card-text">
+              We are health professionals first. We never compromise safety.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Data Ethics</h3>
+            <p class="card-text">
+              We adhere to NDPR/HIPAA. Patient data is sacred.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Evidence Based</h3>
+            <p class="card-text">
+              We do not ship based on vibes. We ship based on proof.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide">
+        <span class="eyebrow">11 Culture</span>
+        <h2>How We Work</h2>
+        <div class="grid-2">
+          <div>
+            <h3 style="color: var(--accent-teal); font-size: 2.5rem">
+              We Are Builders.
+            </h3>
+            <p>We do not just talk; we code, design, and deploy.</p>
+            <h3
+              style="
+                color: var(--accent-indigo);
+                margin-top: 3rem;
+                font-size: 2.5rem;
+              "
+            >
+              We Are Unified.
+            </h3>
+            <p>There is no Service Team vs Product Team. We are one.</p>
+          </div>
+          <div
+            class="card"
+            style="
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              background: var(--accent-slate);
+              color: white;
+            "
+          >
+            <p style="font-size: 2rem; text-align: center; color: white">
+              Speed matters, but correctness matters more.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide">
+        <span class="eyebrow">12 The Team</span>
+        <h2>The Architects</h2>
+        <p>Humans building at E54. One unified institutional engine.</p>
+
+        <div
+          style="
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1rem;
+            width: 100%;
+            margin-top: 2rem;
+          "
+        >
+          <div class="team-card">
+            <img src="Davidic.png" class="team-img" />
+            <div class="team-name" style="font-size: 1rem">David Obiyenwa</div>
+            <div class="team-role" style="font-size: 0.75rem">CEO</div>
+          </div>
+
+          <div
+            class="team-card"
+            style="border-bottom: 3px solid var(--accent-slate)"
+          >
+            <img src="dolapo.jpeg" class="team-img" />
+            <div class="team-name" style="font-size: 1rem">Dolapo Moses</div>
+            <div class="team-role" style="font-size: 0.75rem">
+              Head of Operations
+            </div>
+            <div
+              style="
+                font-size: 0.6rem;
+                color: var(--text-muted);
+                margin-top: 3px;
+              "
+            >
+              Backbone & Finance
+            </div>
+          </div>
+
+          <div
+            class="team-card"
+            style="border-bottom: 3px solid var(--accent-amber)"
+          >
+            <img
+              src="https://api.dicebear.com/7.x/initials/svg?seed=Success&backgroundColor=D97706"
+              class="team-img"
+            />
+            <div class="team-name" style="font-size: 1rem">
+              Olanrewaju Jesutofunmi
+            </div>
+            <div class="team-role" style="font-size: 0.75rem">
+              Head of Venture Success
+            </div>
+            <div
+              style="
+                font-size: 0.6rem;
+                color: var(--text-muted);
+                margin-top: 3px;
+              "
+            >
+              Monitoring & Health
+            </div>
+          </div>
+
+          <div
+            class="team-card"
+            style="border-bottom: 3px solid var(--accent-teal)"
+          >
+            <img src="itunu.png" class="team-img" />
+            <div class="team-name" style="font-size: 1rem">Olamide Adisa</div>
+            <div class="team-role" style="font-size: 0.75rem">
+              Head of Client Growth
+            </div>
+            <div
+              style="
+                font-size: 0.6rem;
+                color: var(--text-muted);
+                margin-top: 3px;
+              "
+            >
+              Sales Interface
+            </div>
+          </div>
+
+          <div
+            class="team-card"
+            style="border-bottom: 3px solid var(--accent-amber)"
+          >
+            <img src="Dorrcas.jpg" class="team-img" />
+            <div class="team-name" style="font-size: 1rem">Oyetunji Dorcas</div>
+            <div class="team-role" style="font-size: 0.75rem">
+              Head of Clinical Governance
+            </div>
+            <div
+              style="
+                font-size: 0.6rem;
+                color: var(--text-muted);
+                margin-top: 3px;
+              "
+            >
+              Safety & Ethics
+            </div>
+          </div>
+
+          <div
+            class="team-card"
+            style="border-bottom: 3px solid var(--accent-teal)"
+          >
+            <img src="omodolapo.jpeg" class="team-img" />
+            <div class="team-name" style="font-size: 1rem">
+              Omodolapo Oladoja
+            </div>
+            <div class="team-role" style="font-size: 0.75rem">
+              Head of Strategic Comms
+            </div>
+            <div
+              style="
+                font-size: 0.6rem;
+                color: var(--text-muted);
+                margin-top: 3px;
+              "
+            >
+              Narrative & Voice
+            </div>
+          </div>
+
+          <div
+            class="team-card"
+            style="border-bottom: 3px solid var(--accent-teal)"
+          >
+            <img
+              src="https://api.dicebear.com/7.x/initials/svg?seed=Brand&backgroundColor=0D9488"
+              class="team-img"
+            />
+            <div class="team-name" style="font-size: 1rem">Joshua Enigma</div>
+            <div class="team-role" style="font-size: 0.75rem">
+              Head of Brand & Design
+            </div>
+            <div
+              style="
+                font-size: 0.6rem;
+                color: var(--text-muted);
+                margin-top: 3px;
+              "
+            >
+              Visuals & UX
+            </div>
+          </div>
+
+          <div class="team-card">
+            <img src="thomas.jpeg" class="team-img" />
+            <div class="team-name" style="font-size: 1rem">Thomas Godwin</div>
+            <div class="team-role" style="font-size: 0.75rem">
+              Head of Product
+            </div>
+          </div>
+
+          <div class="team-card">
+            <img
+              src="https://api.dicebear.com/7.x/initials/svg?seed=Eng&backgroundColor=4F46E5"
+              class="team-img"
+            />
+            <div class="team-name" style="font-size: 1rem">Kelvin Ajayi</div>
+            <div class="team-role" style="font-size: 0.75rem">
+              Head of Engineering
+            </div>
+          </div>
+
+          <div class="team-card">
+            <img src="muhiydeen.jpeg" class="team-img" />
+            <div class="team-name" style="font-size: 1rem">
+              Muhiydeen Mustapha
+            </div>
+            <div class="team-role" style="font-size: 0.75rem">
+              Head of Research
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide">
+        <span class="eyebrow">13 Institutional Governance</span>
+        <h2>The Advisory Board</h2>
+        <p>
+          We are guided by industry veterans who ensure our innovation is
+          grounded in clinical excellence.
+        </p>
+
+        <div
+          style="
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 2rem;
+            height: 65%;
+          "
+        >
+          <div
+            class="card"
+            style="
+              display: grid;
+              grid-template-columns: 300px 1fr;
+              gap: 3rem;
+              padding: 0;
+              overflow: hidden;
+              max-width: 1000px;
+            "
+          >
+            <div
+              style="
+                background: #0f172a;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-end;
+                padding: 2rem;
+                position: relative;
+              "
+            >
+              <img
+                src="Eze.jpeg"
+                style="
+                  width: 100%;
+                  height: auto;
+                  border-radius: 12px;
+                  border: 4px solid var(--accent-teal);
+                  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+                  margin-bottom: 1rem;
+                  object-fit: cover;
+                "
+              />
+
+              <div style="color: white">
+                <div
+                  style="
+                    font-size: 0.9rem;
+                    text-transform: uppercase;
+                    letter-spacing: 2px;
+                    color: var(--accent-teal);
+                    font-weight: 700;
+                  "
+                >
+                  Chairman
+                </div>
+                <div
+                  style="font-size: 1.5rem; font-weight: 700; line-height: 1.2"
+                >
+                  Clinical & Scientific Advisory Board
+                </div>
+              </div>
+            </div>
+
+            <div
+              style="
+                padding: 3rem 2rem 2rem 0;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+              "
+            >
+              <h3
+                style="
+                  font-size: 2.2rem;
+                  color: var(--text-primary);
+                  margin-bottom: 0.5rem;
+                  font-family: 'Space Grotesk';
+                "
+              >
+                SC. Eze Cosmas Tochukwu
+              </h3>
+              <div
+                style="
+                  font-size: 1.1rem;
+                  color: var(--accent-indigo);
+                  font-weight: 600;
+                  margin-bottom: 1.5rem;
+                "
+              >
+                Chief Medical Laboratory Scientist, UCH Ibadan
+              </div>
+
+              <div
+                style="
+                  display: grid;
+                  grid-template-columns: 1fr 1fr;
+                  gap: 1.5rem;
+                  margin-bottom: 2rem;
+                "
+              >
+                <div>
+                  <strong
+                    style="
+                      display: block;
+                      font-size: 0.85rem;
+                      text-transform: uppercase;
+                      color: var(--text-muted);
+                      letter-spacing: 1px;
+                      margin-bottom: 5px;
+                    "
+                    >Education</strong
+                  >
+                  <ul
+                    style="
+                      list-style: none;
+                      font-size: 0.95rem;
+                      color: var(--text-secondary);
+                      line-height: 1.6;
+                    "
+                  >
+                    <li>• PhD Candidate, Epidemiology (UNIPORT)</li>
+                    <li>
+                      • MSc Medical Microbiology (LAUTECH) -
+                      <span style="color: var(--accent-teal); font-weight: 700"
+                        >Best Graduating Student</span
+                      >
+                    </li>
+                    <li>• BSc MLS (UNN)</li>
+                  </ul>
+                </div>
+                <div>
+                  <strong
+                    style="
+                      display: block;
+                      font-size: 0.85rem;
+                      text-transform: uppercase;
+                      color: var(--text-muted);
+                      letter-spacing: 1px;
+                      margin-bottom: 5px;
+                    "
+                    >Professional Standing</strong
+                  >
+                  <ul
+                    style="
+                      list-style: none;
+                      font-size: 0.95rem;
+                      color: var(--text-secondary);
+                      line-height: 1.6;
+                    "
+                  >
+                    <li>• Chief Auditor, AMLSN (UCH Chapter)</li>
+                    <li>• Member, MLSCN</li>
+                    <li>• Member, Irish Medical Scientists Council</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div
+                style="
+                  background: #f1f5f9;
+                  padding: 1.5rem;
+                  border-radius: 12px;
+                  border-left: 5px solid var(--accent-amber);
+                "
+              >
+                <strong
+                  style="
+                    display: block;
+                    font-size: 0.9rem;
+                    color: var(--text-primary);
+                    margin-bottom: 0.5rem;
+                  "
+                >
+                  Innovation & Research Highlights</strong
+                >
+                <p
+                  style="
+                    font-size: 0.95rem;
+                    color: var(--text-secondary);
+                    line-height: 1.6;
+                    margin: 0;
+                  "
+                >
+                  Expert in Bioinformatics and AMR (Antimicrobial Resistance).
+                  Awarded by <strong>Leeds University UK</strong> for developing
+                  a C02 measuring device for blood culture analysis. Author of 4
+                  international publications.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide">
+        <span class="eyebrow">13 The Roadmap</span>
+        <h2>Immediate Next Steps</h2>
+        <div class="grid-2">
+          <div class="card">
+            <h3 style="color: var(--accent-indigo)">Month 1: Setup</h3>
+            <ul
+              style="
+                margin-left: 1.5rem;
+                margin-top: 2rem;
+                line-height: 2;
+                font-size: 1.3rem;
+              "
+            >
+              <li>Finalize Pod Assignments.</li>
+              <li>Launch Enablement Service Catalog.</li>
+              <li>Secure Pilot Lab Partner (The Trojan Horse).</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3 style="color: var(--accent-teal)">Month 2-3: Deployment</h3>
+            <ul
+              style="
+                margin-left: 1.5rem;
+                margin-top: 2rem;
+                line-height: 2;
+                font-size: 1.3rem;
+              "
+            >
+              <li>Execute Digital Transformation for Pilot Lab.</li>
+              <li>Gather initial workflow data.</li>
+              <li>Begin "Problem Discovery" for first Venture.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide">
+        <span class="eyebrow">14 Discussion</span>
+        <h2>Open Forum</h2>
+        <p>Questions, Clarity, and Alignment.</p>
+        <div style="margin-top: 4rem; opacity: 0.7; font-size: 1.4rem">
+          <p><strong>Discussion Points:</strong></p>
+          <ul>
+            <li>Which Pod do you see yourself in?</li>
+            <li>Who are our target "Enablement" partners?</li>
+            <li>Technical constraints and readiness?</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="slide">
+        <h1 style="color: var(--accent-teal); font-size: 6rem">Let's Build.</h1>
+        <p>
+          The infrastructure of Africa’s digital health future begins with us.
+        </p>
+        <div style="margin-top: 5rem">
+          <p
+            style="
+              font-size: 1.2rem;
+              text-transform: uppercase;
+              letter-spacing: 4px;
+            "
+          >
+            Ennovatio54
+          </p>
+        </div>
+      </div>
+
+      <div class="progress-bar" id="progressBar"></div>
+      <div class="slide-number" id="slideNum">01 / 16</div>
+    </div>
+
+    <script>
+      const slides = document.querySelectorAll(".slide");
+      const progressBar = document.getElementById("progressBar");
+      const slideNum = document.getElementById("slideNum");
+      let currentSlide = 0;
+
+      function updateSlide() {
+        slides.forEach((slide, index) => {
+          slide.classList.remove("active");
+          if (index === currentSlide) slide.classList.add("active");
+        });
+
+        // Update Progress Bar
+        const progress = ((currentSlide + 1) / slides.length) * 100;
+        progressBar.style.width = progress + "%";
+
+        // Update Slide Number
+        slideNum.innerText =
+          String(currentSlide + 1).padStart(2, "0") + " / " + slides.length;
+      }
+
+      // Navigation Logic
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowRight" || e.key === " ") {
+          if (currentSlide < slides.length - 1) {
+            currentSlide++;
+            updateSlide();
+          }
+        }
+        if (e.key === "ArrowLeft") {
+          if (currentSlide > 0) {
+            currentSlide--;
+            updateSlide();
+          }
+        }
+      });
+
+      // Click to Advance
+      document.body.addEventListener("click", (e) => {
+        if (e.clientX > window.innerWidth / 2) {
+          if (currentSlide < slides.length - 1) {
+            currentSlide++;
+            updateSlide();
+          }
+        } else {
+          if (currentSlide > 0) {
+            currentSlide--;
+            updateSlide();
+          }
+        }
+      });
+
+      // Init
+      updateSlide();
+    </script>
+  </body>
+</html>

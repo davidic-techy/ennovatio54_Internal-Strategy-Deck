@@ -2,7 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
     <title>Ennovatio54 | Strategic Alignment</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;800&family=Space+Grotesk:wght@500;700&display=swap"
@@ -34,9 +37,10 @@
         font-family: "Manrope", sans-serif;
         background-color: var(--bg-base);
         color: var(--text-primary);
-        height: 100vh;
+        height: 100vh; /* Fallback */
+        height: 100dvh; /* Dynamic Height for Mobile Browsers */
         width: 100vw;
-        overflow: hidden; /* Main body doesn't scroll, slides do */
+        overflow: hidden;
         background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
         background-size: 40px 40px;
       }
@@ -54,16 +58,22 @@
         left: 0;
         width: 100%;
         height: 100%;
-        padding: 3rem 6rem;
         opacity: 0;
         visibility: hidden;
         transform: scale(0.98) translateY(20px);
-        transition: opacity 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.6s ease;
+        transition: opacity 0.5s ease, transform 0.5s ease;
         display: flex;
         flex-direction: column;
-        justify-content: center; /* Center visually on desktop */
-        overflow-y: auto; /* Allow scrolling inside slide if content is long */
+        
+        /* DESKTOP DEFAULT: Center content */
+        justify-content: center; 
+        
+        /* SCROLL HANDLING */
+        overflow-y: auto; 
         overflow-x: hidden;
+        
+        /* PADDING: Large on desktop */
+        padding: 4rem 6rem;
       }
 
       .slide.active {
@@ -73,10 +83,22 @@
         z-index: 10;
       }
 
+      /* Hide Scrollbar but keep functionality */
+      .slide::-webkit-scrollbar {
+        width: 8px;
+      }
+      .slide::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .slide::-webkit-scrollbar-thumb {
+        background-color: rgba(0,0,0,0.1);
+        border-radius: 4px;
+      }
+
       /* --- TYPOGRAPHY --- */
       h1 {
         font-family: "Space Grotesk", sans-serif;
-        font-size: clamp(3rem, 6vw, 5.5rem);
+        font-size: clamp(3rem, 8vw, 6rem);
         line-height: 1.1;
         font-weight: 700;
         letter-spacing: -2px;
@@ -86,7 +108,7 @@
 
       h2 {
         font-family: "Space Grotesk", sans-serif;
-        font-size: clamp(2rem, 4vw, 3.5rem);
+        font-size: clamp(2.2rem, 5vw, 4rem);
         font-weight: 700;
         margin-bottom: 1rem;
         letter-spacing: -1px;
@@ -105,25 +127,26 @@
       }
 
       p {
-        font-size: clamp(1rem, 1.5vw, 1.5rem);
+        font-size: clamp(1.1rem, 1.5vw, 1.6rem);
         line-height: 1.6;
         color: var(--text-secondary);
         max-width: 1100px;
         margin-bottom: 1.5rem;
       }
 
-      /* --- COMPONENTS --- */
+      /* --- GRIDS & CARDS --- */
       .grid-2 {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: repeat(2, 1fr);
         gap: 3rem;
         align-items: center;
         width: 100%;
       }
+      
       .grid-3 {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        gap: 1.5rem;
+        gap: 2rem;
         margin-top: 2rem;
         width: 100%;
       }
@@ -131,7 +154,7 @@
       .card {
         background: var(--bg-card);
         border: var(--border-subtle);
-        border-radius: 20px;
+        border-radius: 16px;
         padding: 2rem;
         box-shadow: var(--shadow-soft);
         height: 100%;
@@ -176,10 +199,11 @@
         margin-top: 2rem;
       }
 
-      /* --- TEAM GRID --- */
+      /* --- TEAM GRID (Responsive) --- */
       .team-grid-container {
         display: grid;
-        grid-template-columns: repeat(5, 1fr);
+        /* Auto-fit creates columns based on minimum width, preventing squishing */
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); 
         gap: 1rem;
         width: 100%;
         margin-top: 2rem;
@@ -187,7 +211,7 @@
 
       .team-card {
         background: var(--bg-card);
-        padding: 1.5rem 1rem;
+        padding: 1.5rem 0.5rem;
         border-radius: 16px;
         text-align: center;
         box-shadow: var(--shadow-soft);
@@ -195,6 +219,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        height: 100%;
       }
       .team-img {
         width: 80px;
@@ -207,41 +232,38 @@
       }
       .team-name {
         font-weight: 800;
-        font-size: 1rem;
+        font-size: 0.95rem;
         color: var(--text-primary);
+        margin-bottom: 4px;
       }
       .team-role {
-        font-size: 0.8rem;
+        font-size: 0.75rem;
         color: var(--accent-indigo);
         font-weight: 700;
         text-transform: uppercase;
-        margin-top: 0.2rem;
+        line-height: 1.2;
       }
 
-      /* --- CUSTOM CLASSES FOR COMPLEX SLIDES --- */
+      /* --- COMPLEX COMPONENTS --- */
       .synergy-container {
         display: flex;
         justify-content: center;
         align-items: center;
         gap: 3rem;
         margin-top: 4rem;
-        flex-wrap: wrap;
+        flex-wrap: wrap; /* Allows wrapping on smaller screens */
       }
-      .synergy-item {
-        text-align: center;
-      }
-      .synergy-arrow {
-        font-size: 3rem;
-        color: var(--text-muted);
-      }
+      .synergy-item { text-align: center; }
+      .synergy-arrow { font-size: 3rem; color: var(--text-muted); }
 
       .advisory-card {
         display: grid;
         grid-template-columns: 300px 1fr;
-        gap: 3rem;
+        gap: 0;
         padding: 0;
         overflow: hidden;
         max-width: 1000px;
+        width: 100%;
         background: var(--bg-card);
         border-radius: 20px;
         box-shadow: var(--shadow-soft);
@@ -254,7 +276,7 @@
         padding: 2rem;
       }
       .advisory-content {
-        padding: 3rem 2rem 2rem 0;
+        padding: 3rem;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -266,7 +288,7 @@
         margin-bottom: 2rem;
       }
 
-      /* --- CONTROLS --- */
+      /* --- FOOTER CONTROLS --- */
       .progress-bar {
         position: fixed;
         bottom: 0;
@@ -279,118 +301,91 @@
       }
       .slide-number {
         position: fixed;
-        bottom: 2rem;
-        right: 3rem;
+        bottom: 1.5rem;
+        right: 2rem;
         font-family: "Space Grotesk";
         font-weight: 700;
         color: var(--text-muted);
-        font-size: 1.5rem;
+        font-size: 1.2rem;
         z-index: 100;
+        background: rgba(226, 232, 240, 0.8);
+        padding: 5px 10px;
+        border-radius: 8px;
+        backdrop-filter: blur(5px);
       }
-      
-      /* Mobile Nav Hint */
       .mobile-nav-hint {
         display: none;
         position: fixed;
-        bottom: 1rem;
+        bottom: 1.5rem;
         left: 50%;
         transform: translateX(-50%);
         font-size: 0.8rem;
         color: var(--text-muted);
-        opacity: 0.6;
+        background: rgba(226, 232, 240, 0.8);
+        padding: 5px 15px;
+        border-radius: 20px;
         z-index: 100;
+        pointer-events: none;
       }
 
-      /* --- RESPONSIVE MEDIA QUERIES --- */
+      /* ========================================= */
+      /* === RESPONSIVE BREAKPOINTS (THE FIX) === */
+      /* ========================================= */
+
+      /* TABLET & SMALL LAPTOP (Max Width 1024px) */
       @media (max-width: 1024px) {
         .slide {
-          padding: 3rem;
-          justify-content: flex-start; /* Start from top so we can scroll */
+          padding: 4rem 3rem;
+          justify-content: flex-start; /* Start from top to allow scroll */
         }
-        .grid-2, .grid-3 {
-          gap: 2rem;
-        }
-        .team-grid-container {
-          grid-template-columns: repeat(3, 1fr);
-        }
-        .advisory-card {
-          grid-template-columns: 250px 1fr;
-        }
+        .grid-3 { grid-template-columns: 1fr 1fr; } /* 2 cols */
+        .advisory-card { grid-template-columns: 250px 1fr; }
       }
 
-      @media (max-width: 768px) {
-        .slide {
-          padding: 2rem 1.5rem;
-          /* Ensure scroll works on mobile */
-          height: auto;
-          min-height: 100%;
-          position: absolute;
-          overflow-y: auto;
-          justify-content: flex-start;
-        }
+      /* MOBILE LANDSCAPE / TABLET PORTRAIT (Max Width 900px) */
+      @media (max-width: 900px) {
+        .grid-2, .grid-3 { grid-template-columns: 1fr; gap: 1.5rem; } /* Stack all grids */
+        .advisory-card { grid-template-columns: 1fr; } /* Stack advisory */
+        .advisory-image-container { padding: 2rem; height: 300px; }
+        .advisory-content { padding: 2rem; }
+      }
+
+      /* MOBILE PORTRAIT (Max Width 600px) */
+      @media (max-width: 600px) {
+        body { background-size: 20px 20px; } /* Smaller dots */
         
-        .deck-wrapper {
-          overflow: hidden;
+        .slide {
+          padding: 2.5rem 1.5rem 6rem 1.5rem; /* Extra bottom pad for nav controls */
+          justify-content: flex-start;
         }
 
         h1 { margin-top: 1rem; }
+        h2 { font-size: 2.2rem; }
 
-        .grid-2, .grid-3 {
-          grid-template-columns: 1fr; /* Stack vertically */
-          gap: 1.5rem;
+        .grid-3, .grid-2 { 
+          display: flex; 
+          flex-direction: column; 
+          gap: 1.5rem; 
         }
 
+        /* Fix Team Grid on Mobile */
         .team-grid-container {
-          grid-template-columns: repeat(2, 1fr); /* 2 columns on mobile */
+          grid-template-columns: 1fr 1fr; /* 2 columns on phones */
         }
 
-        /* Synergy Section */
-        .synergy-container {
-          flex-direction: column;
-          gap: 1.5rem;
-          margin-top: 2rem;
-        }
-        .synergy-arrow {
-          transform: rotate(90deg); /* Point down instead of right */
-          font-size: 2rem;
-        }
+        /* Fix Synergy Arrows */
+        .synergy-container { flex-direction: column; gap: 1rem; }
+        .synergy-arrow { transform: rotate(90deg); font-size: 2rem; }
 
-        /* Advisory Board */
-        .advisory-card {
-          grid-template-columns: 1fr; /* Stack image and text */
-          gap: 0;
-        }
-        .advisory-image-container {
-          padding: 1.5rem;
-        }
-        .advisory-content {
-          padding: 1.5rem;
-        }
-        .advisory-details-grid {
-          grid-template-columns: 1fr;
-        }
-
-        /* Footer/Nav adjustments */
-        .slide-number {
-          right: 1.5rem;
-          bottom: 1.5rem;
-          font-size: 1rem;
-        }
-        .mobile-nav-hint {
-          display: block;
-        }
+        /* Advisory fixes */
+        .advisory-details-grid { grid-template-columns: 1fr; }
         
-        /* Reduce margin top for team grids */
-        .team-container-bottom {
-            width: 100%;
-            grid-template-columns: repeat(2, 1fr);
-        }
+        /* UI Hints */
+        .slide-number { bottom: 1rem; right: 1rem; font-size: 1rem; }
+        .mobile-nav-hint { display: block; }
         
-        /* Hide scrollbars for cleaner look but keep function */
-        .slide::-webkit-scrollbar {
-            width: 0px;
-            background: transparent;
-        }
+        /* Ensure images don't overflow */
+        img { max-width: 100%; }
       }
 
       /* --- ANIMATIONS --- */
@@ -412,61 +407,38 @@
       <div class="slide active">
         <span class="eyebrow">Strategic Alignment 2026</span>
         <h1>Ennovatio54</h1>
-        <p style="font-size: clamp(1.2rem, 3vw, 2rem); max-width: 1200px">
+        <p style="font-size: clamp(1.2rem, 4vw, 2rem);">
           The Architecture of Africa’s Digital Health Future.
         </p>
         <div style="margin-top: 3rem">
-          <span
-            style="
-              padding: 12px 24px;
-              background: var(--accent-slate);
-              color: white;
-              border-radius: 50px;
-              font-size: 1rem;
-              font-weight: 600;
-              display: inline-block;
-            "
-            >Internal Strategy Deck</span
-          >
+          <span style="padding: 12px 24px; background: var(--accent-slate); color: white; border-radius: 50px; font-size: 1rem; font-weight: 600; display: inline-block;">Internal Strategy Deck</span>
         </div>
       </div>
 
       <div class="slide">
         <span class="eyebrow">01 The Paradox</span>
         <h2>World-class talent.<br />Broken operating system.</h2>
-        <p>
-          We are not just solving for paper files. We are solving for systemic
-          failure. These are some of the <strong>Structural Roots</strong> of
-          the crisis:
-        </p>
+        <p>We are not just solving for paper files. We are solving for systemic failure. Structural Roots of the crisis:</p>
 
         <div class="grid-3">
           <div class="card animate-up">
             <span class="card-icon">🏝️</span>
-            <h3 class="card-title">1. The Interoperability Gap</h3>
-            <p class="card-text">
-              <strong>The Silo Problem.</strong><br />Labs, pharmacies, and
-              hospitals operate as islands. Data does not move.
-            </p>
+            <h3 class="card-title">1. Interoperability Gap</h3>
+            <p class="card-text"><strong>The Silo Problem.</strong><br />Labs, pharmacies, and hospitals operate as islands. Data does not move.</p>
             <div class="card-footer">Result: Fragmented Care</div>
           </div>
 
           <div class="card animate-up delay-1">
             <span class="card-icon">💸</span>
-            <h3 class="card-title">2. The Operational Black Box</h3>
-            <p class="card-text">
-              <strong>The Economic Problem.</strong><br />Facilities run on
-              paper or Excel. Zero visibility into leakage or waste.
-            </p>
+            <h3 class="card-title">2. Operational Black Box</h3>
+            <p class="card-text"><strong>The Economic Problem.</strong><br />Facilities run on paper. Zero visibility into leakage.</p>
             <div class="card-footer">Result: 40% Revenue Loss</div>
           </div>
 
           <div class="card animate-up delay-2">
             <span class="card-icon">🌍</span>
-            <h3 class="card-title">3. The Sovereignty Crisis</h3>
-            <p class="card-text">
-              <strong>The Import Problem.</strong><br />Relying on expensive Western software. Renting instead of owning IP.
-            </p>
+            <h3 class="card-title">3. Sovereignty Crisis</h3>
+            <p class="card-text"><strong>The Import Problem.</strong><br />Relying on expensive Western software. Renting vs Owning IP.</p>
             <div class="card-footer">Result: No AI / No Insights</div>
           </div>
         </div>
@@ -478,31 +450,19 @@
         <p>To build the right solution, we must define who we are.</p>
         <div class="grid-3">
           <div class="card animate-up">
-            <h3 class="card-title" style="color: var(--text-muted)">
-              We are NOT...
-            </h3>
+            <h3 class="card-title" style="color: var(--text-muted)">We are NOT...</h3>
             <p class="card-text">A Digital Agency.</p>
-            <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 0.5rem;">
-              We do not just make websites and leave.
-            </p>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 0.5rem;">We do not just make websites and leave.</p>
           </div>
           <div class="card animate-up delay-1">
-            <h3 class="card-title" style="color: var(--text-muted)">
-              We are NOT...
-            </h3>
+            <h3 class="card-title" style="color: var(--text-muted)">We are NOT...</h3>
             <p class="card-text">A Single Startup.</p>
-            <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 0.5rem;">
-              We are not betting on just one app.
-            </p>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 0.5rem;">We are not betting on just one app.</p>
           </div>
           <div class="card animate-up delay-2" style="border: 3px solid var(--accent-indigo)">
-            <h3 class="card-title" style="color: var(--accent-indigo)">
-              WE ARE...
-            </h3>
+            <h3 class="card-title" style="color: var(--accent-indigo)">WE ARE...</h3>
             <p class="card-text"><strong>A Venture Studio.</strong></p>
-            <p style="font-size: 0.9rem; margin-top: 0.5rem;">
-              An institution that builds multiple, connected healthcare companies under one roof.
-            </p>
+            <p style="font-size: 0.9rem; margin-top: 0.5rem;">An institution building multiple connected healthcare companies.</p>
           </div>
         </div>
       </div>
@@ -514,7 +474,6 @@
           <div>
             <p>Ennovatio54 is the <strong>Infrastructure Layer</strong>.</p>
             <p>Our vision is to become the most trusted innovation institution in Africa.</p>
-            <p>We are building the rails that digital health runs on.</p>
           </div>
           <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%;">
             <div class="card animate-up" style="flex-direction: row; align-items: center; gap: 1rem; padding: 1.5rem;">
@@ -540,15 +499,11 @@
         <div class="grid-2" style="margin-top: 2rem">
           <div class="card" style="border-top: 8px solid var(--accent-teal)">
             <h3 class="card-title" style="color: var(--accent-teal)">Engine A: Enablement</h3>
-            <p class="card-text">
-              <strong>The Service Layer.</strong><br /><br />We modernize existing hospitals & labs immediately to generate revenue.
-            </p>
+            <p class="card-text"><strong>The Service Layer.</strong><br /><br />Modernize existing hospitals & labs to generate revenue.</p>
           </div>
           <div class="card" style="border-top: 8px solid var(--accent-amber)">
             <h3 class="card-title" style="color: var(--accent-amber)">Engine B: Innovation</h3>
-            <p class="card-text">
-              <strong>The Venture Layer.</strong><br /><br />We build proprietary software products based on the data we find.
-            </p>
+            <p class="card-text"><strong>The Venture Layer.</strong><br /><br />Build proprietary software based on gathered data.</p>
           </div>
         </div>
       </div>
@@ -560,28 +515,26 @@
         <div class="grid-3">
           <div class="card">
             <h3 class="card-title">Digital Presence</h3>
-            <p class="card-text">Websites, Portals, and Professional Profiles for labs.</p>
+            <p class="card-text">Websites, Portals, and Professional Profiles.</p>
           </div>
           <div class="card">
             <h3 class="card-title">Operational Audits</h3>
-            <p class="card-text">Preparing facilities for workflow digitization.</p>
+            <p class="card-text">Preparing facilities for digitization.</p>
           </div>
           <div class="card">
             <h3 class="card-title">Strategic Visibility</h3>
-            <p class="card-text">Connecting them to partners and networks.</p>
+            <p class="card-text">Connecting them to partners.</p>
           </div>
         </div>
-        <div class="highlight-box" style="text-align: center; margin-top: 2rem">
-          <p style="margin: 0; font-weight: 700; color: var(--accent-teal)">
-            Result: Revenue + Trust + Data Access.
-          </p>
+        <div class="highlight-box" style="text-align: center;">
+          <p style="margin: 0; font-weight: 700; color: var(--accent-teal)">Result: Revenue + Trust + Data Access.</p>
         </div>
       </div>
 
       <div class="slide">
         <span class="eyebrow">06 Engine B</span>
         <h2>The Innovation Layer</h2>
-        <p>Using the access we gained, we spot the real problems and build scalable products.</p>
+        <p>Using access to spot real problems and build scalable products.</p>
         <div class="grid-3">
           <div class="card">
             <h3 class="card-title">Identify</h3>
@@ -601,7 +554,6 @@
       <div class="slide">
         <span class="eyebrow">07 The Synergy</span>
         <h2>The Flywheel Effect</h2>
-        <p>This is why we win. The two engines feed each other.</p>
         <div class="synergy-container">
           <div class="synergy-item">
             <div style="font-size: 3rem">🏥</div>
@@ -632,11 +584,11 @@
       <div class="slide">
         <span class="eyebrow">08 Operations</span>
         <h2>How We Fit Together</h2>
-        <p>We don't work in silos. We work in 5 functional Pods.</p>
+        <p>We work in 5 functional Pods.</p>
 
         <div class="grid-3">
           <div class="card" style="padding: 1.5rem; border-top: 5px solid var(--accent-slate)">
-            <h3 style="font-size: 1.2rem; color: var(--accent-slate); margin-bottom: 0.5rem;">1. Executive Pod</h3>
+            <h3 style="font-size: 1.2rem; color: var(--accent-slate);">1. Executive Pod</h3>
             <div style="font-size: 0.8rem; text-transform: uppercase; opacity: 0.7; margin-bottom: 0.5rem;">Strategy & Safety</div>
             <ul style="list-style: none; font-size: 0.9rem; padding: 0;">
               <li>• Founder & Strategy</li>
@@ -646,7 +598,7 @@
           </div>
 
           <div class="card" style="padding: 1.5rem; border-top: 5px solid var(--accent-teal)">
-            <h3 style="font-size: 1.2rem; color: var(--accent-teal); margin-bottom: 0.5rem;">2. Enablement Pod</h3>
+            <h3 style="font-size: 1.2rem; color: var(--accent-teal);">2. Enablement Pod</h3>
             <div style="font-size: 0.8rem; text-transform: uppercase; opacity: 0.7; margin-bottom: 0.5rem;">Revenue & Service</div>
             <ul style="list-style: none; font-size: 0.9rem; padding: 0;">
               <li>• Head of Client Growth</li>
@@ -655,7 +607,7 @@
           </div>
 
           <div class="card" style="padding: 1.5rem; border-top: 5px solid var(--accent-amber)">
-            <h3 style="font-size: 1.2rem; color: var(--accent-amber); margin-bottom: 0.5rem;">3. Product Pod</h3>
+            <h3 style="font-size: 1.2rem; color: var(--accent-amber);">3. Product Pod</h3>
             <div style="font-size: 0.8rem; text-transform: uppercase; opacity: 0.7; margin-bottom: 0.5rem;">Venture Building</div>
             <ul style="list-style: none; font-size: 0.9rem; padding: 0;">
               <li>• Head of Product</li>
@@ -664,7 +616,7 @@
           </div>
           
           <div class="card" style="padding: 1.5rem; border-top: 5px solid var(--accent-indigo)">
-            <h3 style="font-size: 1.2rem; color: var(--accent-indigo); margin-bottom: 0.5rem;">4. Engineering Pod</h3>
+            <h3 style="font-size: 1.2rem; color: var(--accent-indigo);">4. Engineering Pod</h3>
             <ul style="list-style: none; font-size: 0.9rem; padding: 0;">
               <li>• Head of Engineering</li>
               <li><em>(Supports All Pods)</em></li>
@@ -672,7 +624,7 @@
           </div>
 
           <div class="card" style="padding: 1.5rem; border-top: 5px solid var(--accent-indigo)">
-            <h3 style="font-size: 1.2rem; color: var(--accent-indigo); margin-bottom: 0.5rem;">5. Discovery Pod</h3>
+            <h3 style="font-size: 1.2rem; color: var(--accent-indigo);">5. Discovery Pod</h3>
             <ul style="list-style: none; font-size: 0.9rem; padding: 0;">
               <li>• Head of Research</li>
               <li><em>(Feeds Product Pod)</em></li>
@@ -688,7 +640,7 @@
       <div class="slide">
         <span class="eyebrow">09 Methodology</span>
         <h2>The Venture Lifecycle</h2>
-        <p>Every product we build goes through four strict gates.</p>
+        <p>Four strict gates.</p>
         <div class="grid-2" style="margin-top: 2rem;">
           <div class="card" style="background: #eff6ff">
             <h3 style="font-size: 1.3rem; color: var(--accent-indigo)">Phase 1: Discovery</h3>
@@ -712,19 +664,18 @@
       <div class="slide">
         <span class="eyebrow">10 Governance</span>
         <h2>Safety & Standards</h2>
-        <p>We deal with lives. These are non-negotiable.</p>
         <div class="grid-3">
           <div class="card">
             <h3>Clinical Integrity</h3>
-            <p class="card-text">We are health professionals first. We never compromise safety.</p>
+            <p class="card-text">We never compromise safety.</p>
           </div>
           <div class="card">
             <h3>Data Ethics</h3>
-            <p class="card-text">We adhere to NDPR/HIPAA. Patient data is sacred.</p>
+            <p class="card-text">Patient data is sacred.</p>
           </div>
           <div class="card">
             <h3>Evidence Based</h3>
-            <p class="card-text">We do not ship based on vibes. We ship based on proof.</p>
+            <p class="card-text">We ship based on proof.</p>
           </div>
         </div>
       </div>
@@ -748,7 +699,7 @@
       <div class="slide">
         <span class="eyebrow">12 The Team</span>
         <h2>The Architects</h2>
-        <p>Humans building at E54. One unified institutional engine.</p>
+        <p>One unified institutional engine.</p>
 
         <div class="team-grid-container">
           <div class="team-card">
@@ -756,55 +707,46 @@
             <div class="team-name">David Obiyenwa</div>
             <div class="team-role">CEO</div>
           </div>
-
           <div class="team-card" style="border-bottom: 3px solid var(--accent-slate)">
             <img src="dolapo.jpeg" class="team-img" />
             <div class="team-name">Dolapo Moses</div>
             <div class="team-role">Head of Ops</div>
           </div>
-
           <div class="team-card" style="border-bottom: 3px solid var(--accent-amber)">
             <img src="https://api.dicebear.com/7.x/initials/svg?seed=Success&backgroundColor=D97706" class="team-img" />
             <div class="team-name">Olanrewaju J.</div>
             <div class="team-role">Head of Success</div>
           </div>
-
           <div class="team-card" style="border-bottom: 3px solid var(--accent-teal)">
             <img src="itunu.png" class="team-img" />
             <div class="team-name">Olamide Adisa</div>
             <div class="team-role">Client Growth</div>
           </div>
-
           <div class="team-card" style="border-bottom: 3px solid var(--accent-amber)">
             <img src="Dorrcas.jpg" class="team-img" />
             <div class="team-name">Oyetunji Dorcas</div>
             <div class="team-role">Governance</div>
           </div>
-
           <div class="team-card" style="border-bottom: 3px solid var(--accent-teal)">
             <img src="omodolapo.jpeg" class="team-img" />
             <div class="team-name">Omodolapo Oladoja</div>
             <div class="team-role">Strategic Comms</div>
           </div>
-
           <div class="team-card" style="border-bottom: 3px solid var(--accent-teal)">
             <img src="https://api.dicebear.com/7.x/initials/svg?seed=Brand&backgroundColor=0D9488" class="team-img" />
             <div class="team-name">Joshua Enigma</div>
             <div class="team-role">Brand & Design</div>
           </div>
-
           <div class="team-card">
             <img src="thomas.jpeg" class="team-img" />
             <div class="team-name">Thomas Godwin</div>
             <div class="team-role">Head of Product</div>
           </div>
-
           <div class="team-card">
             <img src="https://api.dicebear.com/7.x/initials/svg?seed=Eng&backgroundColor=4F46E5" class="team-img" />
             <div class="team-name">Kelvin Ajayi</div>
             <div class="team-role">Head of Eng</div>
           </div>
-
           <div class="team-card">
             <img src="muhiydeen.jpeg" class="team-img" />
             <div class="team-name">Muhiydeen M.</div>
@@ -816,7 +758,7 @@
       <div class="slide">
         <span class="eyebrow">13 Institutional Governance</span>
         <h2>The Advisory Board</h2>
-        <p>We are guided by industry veterans who ensure our innovation is grounded in clinical excellence.</p>
+        <p>Guided by industry veterans.</p>
 
         <div style="display: flex; justify-content: center; align-items: center; margin-top: 2rem; width: 100%;">
           <div class="advisory-card">
@@ -876,9 +818,9 @@
           <div class="card">
             <h3 style="color: var(--accent-teal)">Month 2-3: Deployment</h3>
             <ul style="margin-left: 1.2rem; margin-top: 1rem; line-height: 1.8; font-size: 1rem;">
-              <li>Execute Digital Transformation for Pilot Lab.</li>
+              <li>Execute Digital Transformation.</li>
               <li>Gather initial workflow data.</li>
-              <li>Begin "Problem Discovery" for first Venture.</li>
+              <li>Begin "Problem Discovery".</li>
             </ul>
           </div>
         </div>
@@ -908,7 +850,7 @@
 
       <div class="progress-bar" id="progressBar"></div>
       <div class="slide-number" id="slideNum">01 / 17</div>
-      <div class="mobile-nav-hint">Tap Left / Right to Navigate</div>
+      <div class="mobile-nav-hint">Swipe Left / Right</div>
     </div>
 
     <script>
@@ -920,88 +862,62 @@
       function updateSlide() {
         slides.forEach((slide, index) => {
           slide.classList.remove("active");
-          if (index === currentSlide) slide.classList.add("active");
+          if (index === currentSlide) {
+            slide.classList.add("active");
+            // Auto scroll to top when slide changes
+            slide.scrollTop = 0;
+          }
         });
 
-        // Update Progress Bar
         const progress = ((currentSlide + 1) / slides.length) * 100;
         progressBar.style.width = progress + "%";
-
-        // Update Slide Number
-        slideNum.innerText =
-          String(currentSlide + 1).padStart(2, "0") + " / " + slides.length;
-          
-        // Scroll to top of new slide (helpful for mobile)
-        if(slides[currentSlide]) {
-            slides[currentSlide].scrollTop = 0;
-        }
+        slideNum.innerText = String(currentSlide + 1).padStart(2, "0") + " / " + slides.length;
       }
 
-      // Navigation Logic
+      // Keyboard Nav
       document.addEventListener("keydown", (e) => {
         if (e.key === "ArrowRight" || e.key === " ") {
-          if (currentSlide < slides.length - 1) {
-            currentSlide++;
-            updateSlide();
-          }
+          if (currentSlide < slides.length - 1) { currentSlide++; updateSlide(); }
         }
         if (e.key === "ArrowLeft") {
-          if (currentSlide > 0) {
-            currentSlide--;
-            updateSlide();
-          }
+          if (currentSlide > 0) { currentSlide--; updateSlide(); }
         }
       });
 
-      // Click to Advance
+      // Click Nav (Desktop)
       document.body.addEventListener("click", (e) => {
-        // Prevent accidental clicks on interactive elements from triggering slide change
         if(e.target.tagName === 'A' || e.target.tagName === 'BUTTON') return;
-        
-        if (e.clientX > window.innerWidth / 2) {
-          if (currentSlide < slides.length - 1) {
-            currentSlide++;
-            updateSlide();
-          }
-        } else {
-          if (currentSlide > 0) {
-            currentSlide--;
-            updateSlide();
-          }
+        if (window.innerWidth > 768) {
+            if (e.clientX > window.innerWidth / 2) {
+              if (currentSlide < slides.length - 1) { currentSlide++; updateSlide(); }
+            } else {
+              if (currentSlide > 0) { currentSlide--; updateSlide(); }
+            }
         }
       });
       
-      // Basic Touch Swipe Support
+      // Touch Swipe (Mobile)
       let touchStartX = 0;
       let touchEndX = 0;
       
       document.addEventListener('touchstart', e => {
         touchStartX = e.changedTouches[0].screenX;
-      });
+      }, {passive: true});
       
       document.addEventListener('touchend', e => {
         touchEndX = e.changedTouches[0].screenX;
         handleSwipe();
-      });
+      }, {passive: true});
       
       function handleSwipe() {
         if (touchEndX < touchStartX - 50) {
-            // Swipe Left (Next)
-            if (currentSlide < slides.length - 1) {
-                currentSlide++;
-                updateSlide();
-            }
+            if (currentSlide < slides.length - 1) { currentSlide++; updateSlide(); }
         }
         if (touchEndX > touchStartX + 50) {
-            // Swipe Right (Prev)
-            if (currentSlide > 0) {
-                currentSlide--;
-                updateSlide();
-            }
+            if (currentSlide > 0) { currentSlide--; updateSlide(); }
         }
       }
 
-      // Init
       updateSlide();
     </script>
   </body>
